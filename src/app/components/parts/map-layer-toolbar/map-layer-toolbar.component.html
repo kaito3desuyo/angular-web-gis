@@ -1,0 +1,17 @@
+<mat-card fxLayout="row" fxLayoutAlign="space-between">
+  <div [@openClose]="layerMenuState ? 'open' : 'closed'" style="overflow: hidden">
+    <div class="map-selector" *ngFor="let map of maps" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+      <mat-checkbox [(ngModel)]="map.visible"></mat-checkbox>
+      <div fxLayout="column">
+        <span>{{map.name}}</span>
+        <mat-slider min="0" max="1" step="0.01" [(ngModel)]="map.opacity"></mat-slider>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button mat-icon-button (click)="layerMenuState = !layerMenuState">
+      <mat-icon>layers</mat-icon>
+    </button>
+  </div>
+</mat-card>

@@ -1,0 +1,84 @@
+<div class="map-container" style="position: relative">
+  <aol-map [width]="'100vw'" [height]="'100vh'">
+
+    <aol-view [zoom]="zoom">
+      <aol-coordinate [x]="135" [y]="35" [srid]="'EPSG:4326'"></aol-coordinate>
+    </aol-view>
+    <aol-layer-tile *ngFor="let map of maps" [opacity]="map.opacity" [visible]="map.visible">
+      <aol-source-xyz [url]="map.url"></aol-source-xyz>
+    </aol-layer-tile>
+
+    <aol-layer-vector [zIndex]="1000">
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-linestring>
+            <aol-collection-coordinates [coordinates]="[[-180, 0], [180, 0]]" [srid]="'EPSG:4326'">
+            </aol-collection-coordinates>
+          </aol-geometry-linestring>
+          <aol-style>
+            <aol-style-stroke [color]="'red'" [lineDash]="[5, 5]">
+            </aol-style-stroke>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+
+    <aol-layer-vector [zIndex]="1000">
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-linestring>
+            <aol-collection-coordinates [coordinates]="[[135, -90], [135, 90]]" [srid]="'EPSG:4326'">
+            </aol-collection-coordinates>
+          </aol-geometry-linestring>
+          <aol-style>
+            <aol-style-stroke [color]="'red'" [lineDash]="[5, 5]">
+            </aol-style-stroke>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+
+    <aol-layer-vector [zIndex]="1000">
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-linestring>
+            <aol-collection-coordinates [coordinates]="[[-180, 35], [180, 35]]" [srid]="'EPSG:4326'">
+            </aol-collection-coordinates>
+          </aol-geometry-linestring>
+          <aol-style>
+            <aol-style-stroke [color]="'red'" [lineDash]="[5, 5]">
+            </aol-style-stroke>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+
+
+    <aol-interaction-default></aol-interaction-default>
+
+    <aol-control-defaults></aol-control-defaults>
+    <aol-control-zoom>
+      <aol-content style="position:absolute; top: 24px; left: 24px;">
+        <app-map-zoom-button [instance]="view.instance"></app-map-zoom-button>
+      </aol-content>
+    </aol-control-zoom>
+    <aol-control>
+      <aol-content style="position:absolute; top: 24px; right: 24px;">
+
+        <app-map-layer-toolbar [maps]="maps"></app-map-layer-toolbar>
+
+      </aol-content>
+    </aol-control>
+    <aol-control>
+      <aol-content style="position:absolute; bottom: 0px; right: 0px;">
+
+        <small style="background:rgba(255,255,255,0.54)">
+          出典：<a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a>
+        </small>
+
+      </aol-content>
+    </aol-control>
+
+  </aol-map>
+
+</div>

@@ -1,0 +1,13 @@
+.zoom-button {
+    padding: 12px;
+    cursor: pointer;
+    &:hover {
+        background: rgba(0,0,0,0.06);
+    }
+    &:first-child {
+        border-radius: 4px 4px 0px 0px 
+    }
+    &:last-child {
+        border-radius: 0px 0px 4px 4px 
+    }
+}
