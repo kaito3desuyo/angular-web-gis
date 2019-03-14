@@ -15,8 +15,8 @@
               <p [matTooltip]="map.name">{{map.name}}</p>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="overflow: visible">
-              <mat-checkbox [(ngModel)]="map.visible" (change)="changeVisible(map, $event)"></mat-checkbox>
-              <mat-slider min="0" max="1" step="0.01" [(ngModel)]="map.opacity" (change)="changeOpacity(map, $event)" fxFlex></mat-slider>
+              <mat-checkbox [(ngModel)]="map.visible"></mat-checkbox>
+              <mat-slider min="0" max="1" step="0.01" [(ngModel)]="map.opacity" fxFlex></mat-slider>
             </div>
           </div>
           <button mat-icon-button (click)="onClickDeleteLayer(map.id)">

@@ -5,8 +5,6 @@ import { MapLayerAddDialogComponent } from '../map-layer-add-dialog/map-layer-ad
 import { MapLayerService, MapLayerQuery, MapLayer } from 'src/app/stores/map-layer/state';
 import { ID } from '@datorama/akita';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MatSliderChange } from '@angular/material/slider';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-map-layer-toolbar',
@@ -17,7 +15,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 export class MapLayerToolbarComponent implements OnInit {
 
   layerMenuState = false;
-  maps: MapLayer[] = [];
+  @Input() maps: MapLayer[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -26,27 +24,12 @@ export class MapLayerToolbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.maps = this.mapLayerQuery.getAll();
   }
 
   drop(event: CdkDragDrop<MapLayer[]>) {
     moveItemInArray(this.maps, event.previousIndex, event.currentIndex);
     console.log('ドラッグアンドドロップ', this.maps);
     this.mapLayerService.set(this.maps);
-  }
-
-  changeVisible(map: MapLayer, event: MatCheckboxChange) {
-    console.log('表示／非表示変更', event, map);
-    this.mapLayerService.update(map.id, {
-      visible: event.checked,
-    });
-  }
-
-  changeOpacity(map: MapLayer, event: MatSliderChange) {
-    console.log('透過度変更', event, map);
-    this.mapLayerService.update(map.id, {
-      opacity: event.value,
-    });
   }
 
   onClickAddLayer() {
@@ -59,6 +42,7 @@ export class MapLayerToolbarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: Partial<MapLayer> | undefined) => {
       console.log('レイヤー追加ダイアログを閉じる', result);
       if (result) {
+        this.mapLayerService.set(this.maps);
         this.mapLayerService.add({
           ...result,
           opacity: 1,
@@ -71,6 +55,7 @@ export class MapLayerToolbarComponent implements OnInit {
 
   onClickDeleteLayer(id: ID) {
     console.log('レイヤー削除', id);
+    this.mapLayerService.set(this.maps);
     this.mapLayerService.delete(id);
     this.maps = this.mapLayerQuery.getAll();
   }
