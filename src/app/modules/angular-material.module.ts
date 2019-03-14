@@ -5,6 +5,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -13,7 +18,12 @@ import { MatDividerModule } from '@angular/material/divider';
     MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTooltipModule,
+    DragDropModule
   ],
   exports: [
     MatCardModule,
@@ -21,7 +31,12 @@ import { MatDividerModule } from '@angular/material/divider';
     MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTooltipModule,
+    DragDropModule
   ]
 })
 export class AngularMaterialModule { }

@@ -138,5 +138,8 @@
       }
     }
   },
-  "defaultProject": "angular-web-gis"
+  "defaultProject": "angular-web-gis",
+  "cli": {
+    "defaultCollection": "akita-schematics"
+  }
 }

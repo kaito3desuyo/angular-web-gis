@@ -1,0 +1,28 @@
+<div class="map-layer-add-dialog-container" fxLayout="column" fxLayoutGap="24px">
+  <h2>レイヤーを追加する</h2>
+  <div fxLayout="column" fxLayoutGap="12px" [formGroup]="formData">
+    <mat-form-field>
+      <mat-select (selectionChange)="selectPreset($event)" placeholder="プリセットを選択できます">
+        <mat-optgroup *ngFor="let preset of presets" [label]="preset.groupName">
+            <mat-option *ngFor="let map of preset.children" [value]="map">{{map.name}}</mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="名前" formControlName="name">
+      <mat-error *ngIf="formData.get('name').hasError('required')">
+        名前は<strong>必須項目</strong>です
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="URL" formControlName="url">
+      <mat-error *ngIf="formData.get('url').hasError('required')">
+        URLは<strong>必須項目</strong>です
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+    <button mat-button (click)="onCancel()">キャンセル</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="formData.invalid">追加する</button>
+  </div>
+</div>

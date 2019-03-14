@@ -1,0 +1,23 @@
+:host {
+    .map-operation-box {
+        border: 1px solid rgba(0,0,0,0.06);
+        border-radius: 4px;
+        padding: 8px;
+
+        & > div {
+            & > div {
+                overflow: hidden;
+                & > p {
+                    margin: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
+       
+        .mat-checkbox {
+            margin-top: -3px;
+        }
+    }
+}

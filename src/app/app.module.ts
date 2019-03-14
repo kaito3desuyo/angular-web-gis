@@ -12,6 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { PartsModule } from './components/parts/parts.module';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
+import { MapLayerQuery } from './stores/map-layer/state';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { PartsModule } from './components/parts/parts.module';
     AngularMaterialModule,
     FlexLayoutModule,
     FormsModule,
-    PartsModule
+    PartsModule,
+    environment.production ? [] : AkitaNgDevtools.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
