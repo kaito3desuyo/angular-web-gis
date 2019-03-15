@@ -1,71 +1,125 @@
 <div class="map-container" style="position: relative">
-  <aol-map [width]="'100vw'" [height]="'100vh'">
+  <aol-map id="map" [width]="'100vw'" [height]="'100vh'">
 
     <aol-view [zoom]="zoom">
       <aol-coordinate [x]="135" [y]="35" [srid]="'EPSG:4326'"></aol-coordinate>
     </aol-view>
+
     <aol-layer-tile *ngFor="let map of maps" [opacity]="map.opacity" [visible]="map.visible">
       <aol-source-xyz [url]="map.url"></aol-source-xyz>
     </aol-layer-tile>
 
+    <!--
     <aol-layer-vector [zIndex]="1000">
       <aol-source-vector>
-        <aol-feature>
-          <aol-geometry-linestring>
-            <aol-collection-coordinates [coordinates]="[[-180, 0], [180, 0]]" [srid]="'EPSG:4326'">
-            </aol-collection-coordinates>
-          </aol-geometry-linestring>
-          <aol-style>
-            <aol-style-stroke [color]="'red'" [lineDash]="[5, 5]">
-            </aol-style-stroke>
-          </aol-style>
-        </aol-feature>
+        
+            <aol-feature *ngFor="let point of pointers; let i = index">
+              <aol-interaction-translate (onTranslateStart)="test($event, i)" (onTranslateEnd)="test($event, i)">
+                <aol-geometry-point>
+                  <aol-coordinate [x]="point.coordinates[0]" [y]="point.coordinates[1]" [srid]="'EPSG:4326'"></aol-coordinate>
+                </aol-geometry-point>
+              </aol-interaction-translate>
+                <aol-style>
+                  <aol-style-circle [radius]="10">
+                    <aol-style-stroke [color]="'black'" [width]="2"></aol-style-stroke>
+                    <aol-style-fill [color]="'green'"></aol-style-fill>
+                  </aol-style-circle>
+                </aol-style>
+              </aol-feature>
+        
+      </aol-source-vector>
+    </aol-layer-vector>
+  -->
+
+    <aol-layer-vector *ngFor="let vector of vectors" [opacity]="vector.opacity" [visible]="vector.visible"
+      [zIndex]="1000">
+      <aol-source-vector>
+
+        <ng-container *ngFor="let content of vector.contents; let i = index">
+
+          <aol-feature #feature *ngIf="content.type === 'Point'">
+
+            <aol-geometry-point>
+              <aol-coordinate [x]="content.coordinates[0]" [y]="content.coordinates[1]" [srid]="'EPSG:4326'">
+              </aol-coordinate>
+            </aol-geometry-point>
+
+            <aol-style>
+              <aol-style-circle [radius]="10">
+                <aol-style-stroke [color]="'black'" [width]="2"></aol-style-stroke>
+                <aol-style-fill [color]="'green'"></aol-style-fill>
+              </aol-style-circle>
+              <aol-style-text text="hogehug">
+
+              </aol-style-text>
+            </aol-style>
+
+            <aol-interaction-translate *ngIf="mode === 'hand'" [features]="returnCollection(feature.instance)"
+              (onTranslateEnd)="translateEnd($event, vector.id, i)"></aol-interaction-translate>
+
+          </aol-feature>
+
+
+          <aol-feature *ngIf="content.type === 'LineString'">
+            <aol-geometry-linestring>
+              <aol-collection-coordinates [coordinates]="content.coordinates" [srid]="'EPSG:4326'">
+              </aol-collection-coordinates>
+            </aol-geometry-linestring>
+            <aol-style>
+              <aol-style-stroke [color]="'red'">
+              </aol-style-stroke>
+            </aol-style>
+          </aol-feature>
+
+          <aol-feature *ngIf="content.type === 'Polygon'">
+            <aol-geometry-polygon>
+              <aol-collection-coordinates [coordinates]="content.coordinates[0]" [srid]="'EPSG:4326'">
+              </aol-collection-coordinates>
+            </aol-geometry-polygon>
+            <aol-style>
+              <aol-style-stroke [color]="'red'">
+              </aol-style-stroke>
+              <aol-style-fill [color]="'green'"></aol-style-fill>
+            </aol-style>
+          </aol-feature>
+
+        </ng-container>
+
       </aol-source-vector>
     </aol-layer-vector>
 
-    <aol-layer-vector [zIndex]="1000">
-      <aol-source-vector>
-        <aol-feature>
-          <aol-geometry-linestring>
-            <aol-collection-coordinates [coordinates]="[[135, -90], [135, 90]]" [srid]="'EPSG:4326'">
-            </aol-collection-coordinates>
-          </aol-geometry-linestring>
-          <aol-style>
-            <aol-style-stroke [color]="'red'" [lineDash]="[5, 5]">
-            </aol-style-stroke>
-          </aol-style>
-        </aol-feature>
-      </aol-source-vector>
-    </aol-layer-vector>
+    <aol-interaction-draw *ngIf="mode === 'Point'" [type]="mode" (onDrawStart)="drawStart($event)"
+      (onDrawEnd)="drawEnd($event)"></aol-interaction-draw>
+    <aol-interaction-draw *ngIf="mode === 'LineString'" [type]="mode" (onDrawStart)="drawStart($event)"
+      (onDrawEnd)="drawEnd($event)">
+    </aol-interaction-draw>
+    <aol-interaction-draw *ngIf="mode === 'Polygon'" [type]="mode" (onDrawStart)="drawStart($event)"
+      (onDrawEnd)="drawEnd($event)"></aol-interaction-draw>
 
-    <aol-layer-vector [zIndex]="1000">
-      <aol-source-vector>
-        <aol-feature>
-          <aol-geometry-linestring>
-            <aol-collection-coordinates [coordinates]="[[-180, 35], [180, 35]]" [srid]="'EPSG:4326'">
-            </aol-collection-coordinates>
-          </aol-geometry-linestring>
-          <aol-style>
-            <aol-style-stroke [color]="'red'" [lineDash]="[5, 5]">
-            </aol-style-stroke>
-          </aol-style>
-        </aol-feature>
-      </aol-source-vector>
-    </aol-layer-vector>
+    <!--
+    <aol-interaction-draw [type]="'Circle'" (onDrawEnd)="drawEnd($event)"></aol-interaction-draw>
+    -->
+
+    <aol-interaction-dragpan></aol-interaction-dragpan>
+    <aol-interaction-mousewheelzoom></aol-interaction-mousewheelzoom>
 
 
-    <aol-interaction-default></aol-interaction-default>
 
-    <aol-control-defaults></aol-control-defaults>
     <aol-control-zoom>
-      <aol-content style="position:absolute; top: 24px; left: 24px;">
+      <aol-content style="position:absolute; top: 24px; left: 24px;" fxLayout="column" fxLayoutGap="48px">
         <app-map-zoom-button [instance]="view.instance"></app-map-zoom-button>
+        <app-map-mode-button [disabled]="!isExistActiveVectorLayer()" (selectedType)="onSelectType($event)"
+          (undo)="undo()" (redo)="redo()">
+        </app-map-mode-button>
       </aol-content>
     </aol-control-zoom>
+
+    <aol-control-scaleline #scaleLine></aol-control-scaleline>
+
     <aol-control>
       <aol-content style="position:absolute; top: 24px; right: 24px;">
 
-        <app-map-layer-toolbar [maps]="maps"></app-map-layer-toolbar>
+        <app-map-layer-toolbar [maps]="maps" [vectors]="vectors"></app-map-layer-toolbar>
 
       </aol-content>
     </aol-control>

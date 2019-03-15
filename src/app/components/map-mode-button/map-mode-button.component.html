@@ -1,0 +1,53 @@
+<mat-card style="padding: 0px;" fxLayout="column">
+
+  <div class="mode-button" fxLayout="row" fxLayoutAlign="center" (click)="toggleMode('hand')"
+    [ngClass]="[mode === 'hand' ? 'selected' : '', disabled ? 'disabled' : '']">
+    <mat-icon>pan_tool</mat-icon>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="mode-button" fxLayout="row" fxLayoutAlign="center" (click)="toggleMode('Point')"
+    [ngClass]="[mode === 'Point' ? 'selected' : '', disabled ? 'disabled' : '']">
+    <mat-icon>place</mat-icon>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="mode-button" fxLayout="row" fxLayoutAlign="center" (click)="toggleMode('LineString')"
+    [ngClass]="[mode === 'LineString' ? 'selected' : '', disabled ? 'disabled' : '']">
+    <mat-icon>show_chart</mat-icon>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="mode-button" fxLayout="row" fxLayoutAlign="center" (click)="toggleMode('Polygon')"
+    [ngClass]="[mode === 'Polygon' ? 'selected' : '', disabled ? 'disabled' : '']">
+    <mat-icon>change_history</mat-icon>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="mode-button" fxLayout="row" fxLayoutAlign="center" (click)="clickUndo()"
+    [ngClass]="[disabled ? 'disabled' : '']">
+    <mat-icon>undo</mat-icon>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="mode-button" fxLayout="row" fxLayoutAlign="center" (click)="clickRedo()"
+    [ngClass]="[disabled ? 'disabled' : '']">
+    <mat-icon>redo</mat-icon>
+  </div>
+
+</mat-card>

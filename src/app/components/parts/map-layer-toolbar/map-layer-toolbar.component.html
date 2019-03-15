@@ -1,7 +1,7 @@
 <mat-card fxLayout="row" style="max-width: 360px">
   <div [@openClose]="layerMenuState ? 'open' : 'closed'" style="overflow: hidden" fxLayout="column" fxLayoutGap="12px">
 
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <div cdkDropList (cdkDropListDropped)="dropMapLayer($event)">
       <div cdkDrag class="map-selector" *ngFor="let map of maps; let i = index">
         <div class="map-operation-box" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
           <button mat-icon-button cdkDragHandle>
@@ -19,21 +19,57 @@
               <mat-slider min="0" max="1" step="0.01" [(ngModel)]="map.opacity" fxFlex></mat-slider>
             </div>
           </div>
-          <button mat-icon-button (click)="onClickDeleteLayer(map.id)">
+          <button mat-icon-button (click)="onClickDeleteMapLayer(map.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
       </div>
     </div>
 
-    <button mat-icon-button (click)="onClickAddLayer()">
+    <button mat-icon-button (click)="onClickAddMapLayer()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
 
-  <div>
-    <button mat-icon-button (click)="layerMenuState = !layerMenuState">
+  <div [@openClose]="vectorMenuState ? 'open' : 'closed'" style="overflow: hidden" fxLayout="column" fxLayoutGap="12px">
+
+    <div cdkDropList (cdkDropListDropped)="dropVectorLayer($event)">
+      <div cdkDrag class="map-selector" *ngFor="let vector of vectors; let i = index">
+        <div class="map-operation-box" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px" [ngStyle]="{'background': vector.isSelect ? 'rgba(0,0,0,0.12)' : ''}">
+          <button mat-icon-button cdkDragHandle>
+            <mat-icon>
+              reorder
+            </mat-icon>
+          </button>
+
+          <div fxLayout="column" fxLayoutGap="8px" fxFlex="156px">
+            <div (click)="toggleSelect(vector)" >
+              <p [matTooltip]="vector.name">{{vector.name}}</p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="overflow: visible">
+              <mat-checkbox [(ngModel)]="vector.visible"></mat-checkbox>
+              <mat-slider min="0" max="1" step="0.01" [(ngModel)]="vector.opacity" fxFlex></mat-slider>
+            </div>
+          </div>
+          <button mat-icon-button (click)="onClickDeleteVectorLayer(vector.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button mat-icon-button (click)="onClickAddVectorLayer()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="12px">
+    <button mat-icon-button (click)="layerMenuState = !layerMenuState; vectorMenuState = false;">
       <mat-icon>layers</mat-icon>
+    </button>
+    <button mat-icon-button (click)="vectorMenuState = !vectorMenuState; layerMenuState = false;">
+      <mat-icon>timeline</mat-icon>
     </button>
   </div>
 </mat-card>

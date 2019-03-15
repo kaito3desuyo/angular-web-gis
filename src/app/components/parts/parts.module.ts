@@ -6,6 +6,8 @@ import { NgModule } from '@angular/core';
 import { MapZoomButtonComponent } from './map-zoom-button/map-zoom-button.component';
 import { MapLayerToolbarComponent } from './map-layer-toolbar/map-layer-toolbar.component';
 import { MapLayerAddDialogComponent } from './map-layer-add-dialog/map-layer-add-dialog.component';
+import { VectorLayerAddDialogComponent } from './vector-layer-add-dialog/vector-layer-add-dialog.component';
+import { MapModeButtonComponent } from '../map-mode-button/map-mode-button.component';
 
 @NgModule({
   imports: [
@@ -17,16 +19,21 @@ import { MapLayerAddDialogComponent } from './map-layer-add-dialog/map-layer-add
   ],
   declarations: [
     MapZoomButtonComponent,
+    MapModeButtonComponent,
     MapLayerToolbarComponent,
-    MapLayerAddDialogComponent
+    MapLayerAddDialogComponent,
+    VectorLayerAddDialogComponent
   ],
   exports: [
     MapZoomButtonComponent,
+    MapModeButtonComponent,
     MapLayerToolbarComponent,
-    MapLayerAddDialogComponent
+    MapLayerAddDialogComponent,
+    VectorLayerAddDialogComponent
   ],
   entryComponents: [
-    MapLayerAddDialogComponent
+    MapLayerAddDialogComponent,
+    VectorLayerAddDialogComponent
   ]
 })
 export class PartsModule { }

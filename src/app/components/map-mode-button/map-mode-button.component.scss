@@ -1,0 +1,28 @@
+.mode-button {
+    padding: 12px;
+    cursor: pointer;
+    &.selected {
+        background: rgba(0,0,0,0.12);
+        &:hover {
+            background: rgba(0,0,0,0.12);
+        }
+    }
+    &.disabled {
+        cursor: inherit;
+        & > .mat-icon {
+            color: rgba(0,0,0,0.38)
+        }
+        &:hover {
+            background: transparent;
+        }
+    }
+    &:hover {
+        background: rgba(0,0,0,0.06);
+    }
+    &:first-child {
+        border-radius: 4px 4px 0px 0px 
+    }
+    &:last-child {
+        border-radius: 0px 0px 4px 4px 
+    }
+}
